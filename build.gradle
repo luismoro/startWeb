@@ -1,0 +1,57 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.4.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+apply plugin: 'jacoco'
+
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+    maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
+    maven { url "http://repo.spring.io/libs-release" }
+    maven { url 'http://repo1.maven.org/maven2/' }
+}
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+jar {
+    manifest {
+        attributes("Implementation-Title": "api",
+                "Main-Class": "br.com.config.Application",
+                "Implementation-Version": '1.0')
+    }
+    baseName = 'api'
+}
+
+configurations{
+    providedRuntime
+}
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-web:1.2.5.RELEASE'
+    compile 'org.springframework.boot:spring-boot-actuator:1.2.5.RELEASE'
+    compile 'com.mangofactory:swagger-springmvc:1.0.2'
+    compile 'io.springfox:springfox-swagger2:2.0.3'
+    compile 'io.springfox:springfox-swagger-ui:2.0.3'
+    compile 'net.minidev:json-smart:1.2'
+    compile 'com.google.code.gson:gson:2.3.1'
+
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.1'
+}
